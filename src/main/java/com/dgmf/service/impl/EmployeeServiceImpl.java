@@ -8,6 +8,9 @@ import com.dgmf.service.EmployeeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 @RequiredArgsConstructor
 public class EmployeeServiceImpl implements EmployeeService {
@@ -20,5 +23,24 @@ public class EmployeeServiceImpl implements EmployeeService {
         Employee savedEmployee = employeeRepository.save(employee);
 
         return employeeMapper.mapToEmployeeDto(savedEmployee);
+    }
+
+    @Override
+    public EmployeeDto getEmployeeById(Long employeeDtoId) {
+        Employee employee = employeeRepository.findById(employeeDtoId)
+                .orElseThrow(() -> new RuntimeException(
+                        "Employee Not Found with Given Id : " + employeeDtoId
+                    )
+                );
+
+        return employeeMapper.mapToEmployeeDto(employee);
+    }
+
+    @Override
+    public List<EmployeeDto> getAllEmployees() {
+        List<Employee> employees = employeeRepository.findAll();
+        return employees.stream().map(
+                employeeMapper::mapToEmployeeDto
+        ).collect(Collectors.toList());
     }
 }

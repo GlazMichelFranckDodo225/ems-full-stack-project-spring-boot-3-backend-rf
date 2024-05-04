@@ -26,7 +26,7 @@ public class EmployeeController {
         );
     }
 
-    // Get Employee REST API
+    // Get Employee By Id REST API
     @GetMapping("/{id}")
     private ResponseEntity<EmployeeDto> getEmployeeById(
             @PathVariable("id") Long EmployeeDtoId
@@ -38,5 +38,17 @@ public class EmployeeController {
     @GetMapping
     private ResponseEntity<List<EmployeeDto>> getAllEmployees() {
         return ResponseEntity.ok(employeeService.getAllEmployees());
+    }
+
+    // Update Employee By Id REST API
+    @PutMapping("/{id}")
+    private ResponseEntity<EmployeeDto> updateEmployeeById(
+            @PathVariable("id") Long EmployeeDtoId,
+            @RequestBody EmployeeDto employeeDto
+    ) {
+        return ResponseEntity.ok(employeeService.updateEmployeeById(
+                EmployeeDtoId, employeeDto
+                )
+            );
     }
 }

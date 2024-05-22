@@ -12,6 +12,9 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1/employees")
 @RequiredArgsConstructor
+// Making All the Clients Able to Call these Below
+// Employee Related REST APIs
+@CrossOrigin("*")
 public class EmployeeController {
     private final EmployeeService employeeService;
 
@@ -58,7 +61,7 @@ public class EmployeeController {
             @PathVariable("id") Long EmployeeDtoId
     ) {
         employeeService.deleteEmployeeById(EmployeeDtoId);
-        
+
         return ResponseEntity.ok("Employee Deleted Successfully !");
     }
 }
